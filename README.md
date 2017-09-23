@@ -14,7 +14,7 @@ The data are given in .txt files in the following format
 ```
 ### Jupyter Notebook
 
-- [TDrive - Show Data](/JupyterNotebook/T-Drive.ipynb)
+- [TDrive - Show Data](/JupyterNotebook/TDrive-Show-Data.ipynb)
 
 #### Scripts
 
