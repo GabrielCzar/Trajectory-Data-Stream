@@ -15,4 +15,4 @@ The data are given in .txt files in the following format
 
 #### Scripts
 
-- [Create CSV file with taxi data](gerar_csv.py)
+- [Create CSV file with taxi data](scripts/gerar_csv.py)
