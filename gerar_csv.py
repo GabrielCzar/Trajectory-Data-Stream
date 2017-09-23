@@ -16,7 +16,7 @@ def get_data_from_folder(path):
 	return pd.read_csv(path, infer_datetime_format = True, header = None, parse_dates = [1], names = HEADER)
 
 data = []
-file = '/home/gabriel/Documents/TrajectoryDataStream/VERR/release/taxi_log_2008_by_id'
+file = 'path_dataset'
 
 for _, file_path in enumerate(get_files(file)):
 	data.append(get_data_from_folder(file_path))
