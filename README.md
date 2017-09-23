@@ -12,7 +12,12 @@ The data are given in .txt files in the following format
   1,2008-02-02 15:46:08,116.51135,39.93883
   1,2008-02-02 15:46:08,116.51135,39.93883
 ```
+### Jupyter Notebook
+
+- [TDrive - Show Data](/JupyterNotebook/T-Drive.ipynb)
 
 #### Scripts
 
 - [Create CSV file with taxi data](scripts/gerar_csv.py)
+
+- [Create Topology](scripts/)
