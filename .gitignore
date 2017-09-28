@@ -2,4 +2,4 @@
 *.db
 *.csv
 *.ipynb_checkpoints
-
+.idea/*
