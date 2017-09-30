@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Map-Matching" />
+        <module name="map-matching" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Map-Matching" target="1.5" />
+      <module name="map-matching" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

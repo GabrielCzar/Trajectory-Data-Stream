@@ -10,16 +10,18 @@ import java.util.Properties;
 
 public class ConnectionFactory {
     private static Connection connection = null;
-    private static final String FILE_NAME_PROPERTIES = "config.properties";
+    private static final String CONFIG = "config.properties";
     private static final String STR_DRIVER = "driver";
     private static final String STR_HOST = "host";
     private static final String STR_USER = "user";
     private static final String STR_PASS = "pass";
 
+    private ConnectionFactory () {}
+
     public static Connection getConnection() throws ClassNotFoundException, SQLException, IOException {
         if (connection == null || connection.isClosed()) {
             Properties properties = new Properties();
-            properties.load(new FileInputStream(new File(FILE_NAME_PROPERTIES)));
+            properties.load(ConnectionFactory.class.getClassLoader().getResourceAsStream(CONFIG));
 
             Class.forName(properties.getProperty(STR_DRIVER));
             String host = properties.getProperty(STR_HOST);

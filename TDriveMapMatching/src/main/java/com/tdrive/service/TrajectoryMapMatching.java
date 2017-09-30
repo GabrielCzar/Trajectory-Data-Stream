@@ -15,6 +15,7 @@ import com.graphhopper.util.GPXEntry;
 import com.graphhopper.util.Parameters;
 
 import java.util.List;
+import java.util.Map;
 
 public class TrajectoryMapMatching {
     private final String algorithm = Parameters.Algorithms.DIJKSTRA_BI;
@@ -24,28 +25,21 @@ public class TrajectoryMapMatching {
     private GraphHopper hopper;
 
     public TrajectoryMapMatching(String osmFilePath, String graphHopperLocation) {
-        encoder = new CarFlagEncoder();
-        weighting = new FastestWeighting(encoder);
-        algoOptions = new AlgorithmOptions(algorithm, weighting);
-
         hopper = new GraphHopperOSM();
-        configGraphHopper(osmFilePath, graphHopperLocation);
-    }
-
-    public void configGraphHopper(String osmPath, String location) {
-        hopper.setDataReaderFile(osmPath);
-        hopper.setGraphHopperLocation(location);
+        hopper.setDataReaderFile(osmFilePath);
+        hopper.setGraphHopperLocation(graphHopperLocation);
+        encoder = new CarFlagEncoder();
         hopper.setEncodingManager(new EncodingManager(encoder));
         hopper.getCHFactoryDecorator().setEnabled(false);
         hopper.importOrLoad();
     }
 
-    public List<EdgeMatch> edgeMatches() {
+    public List<EdgeMatch> edgeMatches(List<GPXEntry> entries) {
+        weighting = new FastestWeighting(encoder);
+        algoOptions = new AlgorithmOptions(algorithm, weighting);
         MapMatching mapMatching = new MapMatching(hopper, algoOptions);
-
-        List<GPXEntry> inputGPXEntries = new GPXFile().doImport("nice.gpx").getEntries(); // CHANGE THIS
-
-        MatchResult mr = mapMatching.doWork(inputGPXEntries);
+        MatchResult mr = mapMatching.doWork(entries);
         return mr.getEdgeMatches();
     }
+
 }

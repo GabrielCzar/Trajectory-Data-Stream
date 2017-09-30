@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Map-Matching.iml" filepath="$PROJECT_DIR$/Map-Matching.iml" />
+      <module fileurl="file://$PROJECT_DIR$/map-matching.iml" filepath="$PROJECT_DIR$/map-matching.iml" />
     </modules>
   </component>
 </project>
