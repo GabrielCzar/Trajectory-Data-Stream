@@ -7,10 +7,8 @@ import com.graphhopper.matching.MapMatching;
 import com.graphhopper.matching.MatchResult;
 import com.graphhopper.reader.osm.GraphHopperOSM;
 import com.graphhopper.routing.AlgorithmOptions;
-import com.graphhopper.routing.util.CarFlagEncoder;
-import com.graphhopper.routing.util.EncodingManager;
-import com.graphhopper.routing.weighting.FastestWeighting;
-import com.graphhopper.routing.weighting.Weighting;
+import com.graphhopper.routing.util.*;
+import com.graphhopper.routing.weighting.*;
 import com.graphhopper.util.GPXEntry;
 import com.graphhopper.util.Parameters;
 
@@ -32,11 +30,12 @@ public class TrajectoryMapMatching {
         hopper.setEncodingManager(new EncodingManager(encoder));
         hopper.getCHFactoryDecorator().setEnabled(false);
         hopper.importOrLoad();
+
+        weighting = new FastestWeighting(encoder);
+        algoOptions = new AlgorithmOptions(algorithm, weighting);
     }
 
     public List<EdgeMatch> edgeMatches(List<GPXEntry> entries) {
-        weighting = new FastestWeighting(encoder);
-        algoOptions = new AlgorithmOptions(algorithm, weighting);
         MapMatching mapMatching = new MapMatching(hopper, algoOptions);
         MatchResult mr = mapMatching.doWork(entries);
         return mr.getEdgeMatches();
