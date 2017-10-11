@@ -12,23 +12,40 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TrajectoryMapMatching.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TrajectoryMapMatching.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/tdrive/service/TrajectoryMapMatching.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="263">
-              <caret line="56" column="57" lean-forward="false" selection-start-line="56" selection-start-column="57" selection-end-line="56" selection-end-column="57" />
+            <state relative-caret-position="141">
+              <caret line="70" column="96" lean-forward="false" selection-start-line="70" selection-start-column="96" selection-end-line="70" selection-end-column="96" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="App.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="App.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/tdrive/App.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="41" lean-forward="false" selection-start-line="22" selection-start-column="41" selection-end-line="22" selection-end-column="41" />
+            <state relative-caret-position="321">
+              <caret line="34" column="32" lean-forward="true" selection-start-line="34" selection-start-column="32" selection-end-line="34" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Repository.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/tdrive/dao/Repository.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="67">
+              <caret line="16" column="62" lean-forward="false" selection-start-line="16" selection-start-column="62" selection-end-line="16" selection-end-column="62" />
+              <folding>
+                <marker date="1507695842176" expanded="true" signature="532:583" ph="select taxi_... " />
+                <marker date="1507695842176" expanded="true" signature="532:584" ph="select taxi_... missingValue" />
+                <marker date="1507695842176" expanded="true" signature="532:602" ph="select taxi_... missingValue" />
+                <marker date="1507695842176" expanded="true" signature="532:620" ph="select taxi_... missingValue" />
+                <marker date="1507695842176" expanded="true" signature="532:626" ph="select taxi_... missingValue" />
+                <marker date="1507695842176" expanded="true" signature="532:627" ph="select taxi_... missingValue" />
               </folding>
             </state>
           </provider>
@@ -56,8 +73,8 @@
         <option value="$PROJECT_DIR$/src/main/resources/config.properties" />
         <option value="$PROJECT_DIR$/src/main/java/com/tdrive/dao/TryCorrectPoints.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/tdrive/dao/Repository.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/tdrive/App.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/tdrive/service/TrajectoryMapMatching.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/tdrive/App.java" />
       </list>
     </option>
   </component>
@@ -331,12 +348,12 @@
       <workItem from="1507153317176" duration="33000" />
       <workItem from="1507178468769" duration="4248000" />
       <workItem from="1507211900624" duration="256000" />
-      <workItem from="1507686740235" duration="5402000" />
+      <workItem from="1507686740235" duration="10482000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25658000" />
+    <option name="totallyTimeSpent" value="30738000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1366" height="768" extended-state="6" />
@@ -350,7 +367,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32970452" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32970452" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -411,14 +428,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/tdrive/Util/ManagerPoints.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/tdrive/service/TrajectoryMapMatching.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
@@ -448,12 +457,12 @@
         <state relative-caret-position="120">
           <caret line="19" column="103" lean-forward="false" selection-start-line="19" selection-start-column="103" selection-end-line="19" selection-end-column="103" />
           <folding>
-            <marker date="1507688794580" expanded="true" signature="532:605" ph="select taxi_... " />
-            <marker date="1507688794580" expanded="true" signature="532:606" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:624" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:642" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:648" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:649" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:583" ph="select taxi_... " />
+            <marker date="1507695842176" expanded="true" signature="532:584" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:602" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:620" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:626" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:627" ph="select taxi_... missingValue" />
           </folding>
         </state>
       </provider>
@@ -531,12 +540,12 @@
         <state relative-caret-position="120">
           <caret line="19" column="103" lean-forward="true" selection-start-line="19" selection-start-column="103" selection-end-line="19" selection-end-column="103" />
           <folding>
-            <marker date="1507688794580" expanded="true" signature="532:605" ph="select taxi_... " />
-            <marker date="1507688794580" expanded="true" signature="532:606" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:624" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:642" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:648" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:649" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:583" ph="select taxi_... " />
+            <marker date="1507695842176" expanded="true" signature="532:584" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:602" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:620" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:626" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:627" ph="select taxi_... missingValue" />
           </folding>
         </state>
       </provider>
@@ -596,12 +605,12 @@
         <state relative-caret-position="120">
           <caret line="19" column="129" lean-forward="false" selection-start-line="19" selection-start-column="129" selection-end-line="19" selection-end-column="129" />
           <folding>
-            <marker date="1507688794580" expanded="true" signature="532:605" ph="select taxi_... " />
-            <marker date="1507688794580" expanded="true" signature="532:606" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:624" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:642" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:648" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:649" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:583" ph="select taxi_... " />
+            <marker date="1507695842176" expanded="true" signature="532:584" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:602" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:620" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:626" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:627" ph="select taxi_... missingValue" />
           </folding>
         </state>
       </provider>
@@ -653,12 +662,12 @@
         <state relative-caret-position="450">
           <caret line="30" column="28" lean-forward="true" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
           <folding>
-            <marker date="1507688794580" expanded="true" signature="532:605" ph="select taxi_... " />
-            <marker date="1507688794580" expanded="true" signature="532:606" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:624" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:642" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:648" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:649" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:583" ph="select taxi_... " />
+            <marker date="1507695842176" expanded="true" signature="532:584" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:602" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:620" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:626" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:627" ph="select taxi_... missingValue" />
           </folding>
         </state>
       </provider>
@@ -702,12 +711,12 @@
         <state relative-caret-position="120">
           <caret line="19" column="115" lean-forward="true" selection-start-line="19" selection-start-column="115" selection-end-line="19" selection-end-column="115" />
           <folding>
-            <marker date="1507688794580" expanded="true" signature="532:605" ph="select taxi_... " />
-            <marker date="1507688794580" expanded="true" signature="532:606" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:624" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:642" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:648" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:649" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:583" ph="select taxi_... " />
+            <marker date="1507695842176" expanded="true" signature="532:584" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:602" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:620" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:626" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:627" ph="select taxi_... missingValue" />
           </folding>
         </state>
       </provider>
@@ -767,12 +776,12 @@
         <state relative-caret-position="120">
           <caret line="19" column="121" lean-forward="false" selection-start-line="19" selection-start-column="121" selection-end-line="19" selection-end-column="121" />
           <folding>
-            <marker date="1507688794580" expanded="true" signature="532:605" ph="select taxi_... " />
-            <marker date="1507688794580" expanded="true" signature="532:606" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:624" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:642" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:648" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:649" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:583" ph="select taxi_... " />
+            <marker date="1507695842176" expanded="true" signature="532:584" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:602" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:620" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:626" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:627" ph="select taxi_... missingValue" />
           </folding>
         </state>
       </provider>
@@ -855,34 +864,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/tdrive/dao/Repository.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="82">
-          <caret line="17" column="73" lean-forward="false" selection-start-line="17" selection-start-column="73" selection-end-line="17" selection-end-column="73" />
+        <state relative-caret-position="67">
+          <caret line="16" column="62" lean-forward="false" selection-start-line="16" selection-start-column="62" selection-end-line="16" selection-end-column="62" />
           <folding>
-            <marker date="1507688794580" expanded="true" signature="532:605" ph="select taxi_... " />
-            <marker date="1507688794580" expanded="true" signature="532:606" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:624" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:642" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:648" ph="select taxi_... missingValue" />
-            <marker date="1507688794580" expanded="true" signature="532:649" ph="select taxi_... missingValue" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/tdrive/App.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="41" lean-forward="false" selection-start-line="22" selection-start-column="41" selection-end-line="22" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="true" />
+            <marker date="1507695842176" expanded="true" signature="532:583" ph="select taxi_... " />
+            <marker date="1507695842176" expanded="true" signature="532:584" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:602" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:620" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:626" ph="select taxi_... missingValue" />
+            <marker date="1507695842176" expanded="true" signature="532:627" ph="select taxi_... missingValue" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/tdrive/service/TrajectoryMapMatching.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="56" column="57" lean-forward="false" selection-start-line="56" selection-start-column="57" selection-end-line="56" selection-end-column="57" />
+        <state relative-caret-position="141">
+          <caret line="70" column="96" lean-forward="false" selection-start-line="70" selection-start-column="96" selection-end-line="70" selection-end-column="96" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/map-matching-gpx-entries.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="49" lean-forward="true" selection-start-line="15" selection-start-column="49" selection-end-line="15" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/tdrive/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="34" column="32" lean-forward="true" selection-start-line="34" selection-start-column="32" selection-end-line="34" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

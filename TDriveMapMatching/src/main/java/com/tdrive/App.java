@@ -1,6 +1,7 @@
 package com.tdrive;
 
 import com.graphhopper.matching.EdgeMatch;
+import com.graphhopper.matching.MatchResult;
 import com.graphhopper.util.GPXEntry;
 import com.tdrive.dao.Repository;
 import com.tdrive.service.TrajectoryMapMatching;
@@ -20,9 +21,15 @@ public class App {
 
             TrajectoryMapMatching mapMatching = new TrajectoryMapMatching(OSM_FILE_PATH, GRAPH_HOPPER_LOCATION);
 
-            List<EdgeMatch> edgeMatches = mapMatching.getEdgesMatches(gpxEntries.get(1368));
+            List<GPXEntry> gpxMatched = mapMatching.doMatching(gpxEntries.get(1368));
 
-            System.out.println(edgeMatches.size());
+            System.out.println(gpxEntries.get(1368).get(0));
+            System.out.println(gpxMatched.get(0));
+
+            System.out.println("GPX BD -> " + gpxEntries.get(1368).size());
+            System.out.println("GPX MATCHED -> " + gpxMatched.size());
+
+            mapMatching.saveMapMatching(gpxMatched, 1368, "map-matching-gpx-entries.csv");
 
         } catch (Exception e) {
             e.printStackTrace();

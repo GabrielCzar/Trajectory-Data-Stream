@@ -4,12 +4,16 @@ import com.graphhopper.GraphHopper;
 import com.graphhopper.matching.*;
 import com.graphhopper.reader.osm.GraphHopperOSM;
 import com.graphhopper.routing.AlgorithmOptions;
+import com.graphhopper.routing.Path;
 import com.graphhopper.routing.util.*;
 import com.graphhopper.routing.weighting.*;
 import com.graphhopper.storage.GraphHopperStorage;
 import com.graphhopper.storage.index.LocationIndexTree;
 import com.graphhopper.util.GPXEntry;
 import com.graphhopper.util.Parameters;
+import com.graphhopper.util.PointList;
+import com.graphhopper.util.shapes.GHPoint;
+import sun.security.krb5.internal.PAData;
 
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -18,6 +22,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class TrajectoryMapMatching {
     private final String algorithm = Parameters.Algorithms.DIJKSTRA_BI;
@@ -40,37 +45,45 @@ public class TrajectoryMapMatching {
         algoOptions = new AlgorithmOptions(algorithm, weighting);
     }
 
-    public List<EdgeMatch> getEdgesMatches(List<GPXEntry> entries) {
+    public List<GPXEntry> doMatching(List<GPXEntry> entries) {
         MapMatching mapMatching = new MapMatching(hopper, algoOptions);
-        MatchResult mr = mapMatching.doWork(entries);
-        return mr.getEdgeMatches();
-    }
+        mapMatching.setMeasurementErrorSigma(50);
+        MatchResult mr = null;
+        try {
+            mr = mapMatching.doWork(entries);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        List<GPXEntry> gpxMatched = new ArrayList<>();
 
-    public List<GPXEntry> convertEdgeMatchesInListGpxEntries(List<EdgeMatch> edgeMatches) {
-        List<GPXEntry> gpxMatches = new ArrayList<>();
-
-        for (EdgeMatch edgeMatch : edgeMatches) {
-            List<GPXExtension> gpxExtensions = edgeMatch.getGpxExtensions();
-
-            for (GPXExtension gpxExtension : gpxExtensions) {
-                // This just gives me an entry from my input which is closest
-                // to the tower node of the matching edge
-                gpxMatches.add(gpxExtension.getEntry());
+        // Get points of matched track
+        Path path = mapMatching.calcPath(mr);
+        PointList points = path.calcPoints();
+        if (points != null && !points.isEmpty()) {
+            for (GHPoint pt : points) {
+                gpxMatched.add(new GPXEntry(pt.getLat(), pt.getLon(), 0.0, 0));
             }
         }
-
-        return gpxMatches;
+        return gpxMatched;
     }
 
-    public void saveMapMatching(List<EdgeMatch> edgeMatches, Integer trajectorieID) {
+    public void saveMapMatching(List<GPXEntry> gpxEntries, Integer trajectoryID, String fileName) {
         try {
-            PrintStream pt = new PrintStream(new FileOutputStream("map-matching-edges-matches", true));
+            PrintStream pt = new PrintStream(new FileOutputStream(fileName, true));
 
+            pt.println("taxi_id, latitude, longitude, ele, date_time");
+            for (GPXEntry gpx : gpxEntries) {
+                pt.println(formatGpxEntry(gpx, trajectoryID));
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    private String formatGpxEntry (GPXEntry gpxEntry, int trajectoryID) {
+        return trajectoryID + ", " + gpxEntry.toString();
+    }
 
 }
