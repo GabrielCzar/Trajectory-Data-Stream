@@ -13,6 +13,7 @@ import com.graphhopper.util.GPXEntry;
 import com.graphhopper.util.Parameters;
 import com.graphhopper.util.PointList;
 import com.graphhopper.util.shapes.GHPoint;
+import com.graphhopper.util.shapes.GHPoint3D;
 import sun.security.krb5.internal.PAData;
 
 import java.io.FileOutputStream;
@@ -60,8 +61,10 @@ public class TrajectoryMapMatching {
         // Get points of matched track
         Path path = mapMatching.calcPath(mr);
         PointList points = path.calcPoints();
+
         if (points != null && !points.isEmpty()) {
             for (GHPoint pt : points) {
+                System.out.println(pt);
                 gpxMatched.add(new GPXEntry(pt.getLat(), pt.getLon(), 0.0, 0));
             }
         }

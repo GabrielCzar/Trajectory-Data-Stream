@@ -23,13 +23,13 @@ public class App {
 
             List<GPXEntry> gpxMatched = mapMatching.doMatching(gpxEntries.get(1368));
 
-            System.out.println(gpxEntries.get(1368).get(0));
-            System.out.println(gpxMatched.get(0));
+            //System.out.println(gpxEntries.get(1368).get(0));
+            //System.out.println(gpxMatched.get(0));
 
             System.out.println("GPX BD -> " + gpxEntries.get(1368).size());
             System.out.println("GPX MATCHED -> " + gpxMatched.size());
 
-            mapMatching.saveMapMatching(gpxMatched, 1368, "map-matching-gpx-entries.csv");
+            //mapMatching.saveMapMatching(gpxMatched, 1368, "map-matching-gpx-entries.csv");
 
         } catch (Exception e) {
             e.printStackTrace();
