@@ -1,17 +1,21 @@
 package com.tdrive.service;
 
 import com.graphhopper.GraphHopper;
-import com.graphhopper.matching.EdgeMatch;
-import com.graphhopper.matching.GPXFile;
-import com.graphhopper.matching.MapMatching;
-import com.graphhopper.matching.MatchResult;
+import com.graphhopper.matching.*;
 import com.graphhopper.reader.osm.GraphHopperOSM;
 import com.graphhopper.routing.AlgorithmOptions;
 import com.graphhopper.routing.util.*;
 import com.graphhopper.routing.weighting.*;
+import com.graphhopper.storage.GraphHopperStorage;
+import com.graphhopper.storage.index.LocationIndexTree;
 import com.graphhopper.util.GPXEntry;
 import com.graphhopper.util.Parameters;
 
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +27,8 @@ public class TrajectoryMapMatching {
     private GraphHopper hopper;
 
     public TrajectoryMapMatching(String osmFilePath, String graphHopperLocation) {
-        hopper = new GraphHopperOSM();
+        //hopper = new GraphHopperOSM();
+        hopper = new GraphHopper();
         hopper.setDataReaderFile(osmFilePath);
         hopper.setGraphHopperLocation(graphHopperLocation);
         encoder = new CarFlagEncoder();
@@ -35,10 +40,37 @@ public class TrajectoryMapMatching {
         algoOptions = new AlgorithmOptions(algorithm, weighting);
     }
 
-    public List<EdgeMatch> edgeMatches(List<GPXEntry> entries) {
+    public List<EdgeMatch> getEdgesMatches(List<GPXEntry> entries) {
         MapMatching mapMatching = new MapMatching(hopper, algoOptions);
         MatchResult mr = mapMatching.doWork(entries);
         return mr.getEdgeMatches();
     }
+
+    public List<GPXEntry> convertEdgeMatchesInListGpxEntries(List<EdgeMatch> edgeMatches) {
+        List<GPXEntry> gpxMatches = new ArrayList<>();
+
+        for (EdgeMatch edgeMatch : edgeMatches) {
+            List<GPXExtension> gpxExtensions = edgeMatch.getGpxExtensions();
+
+            for (GPXExtension gpxExtension : gpxExtensions) {
+                // This just gives me an entry from my input which is closest
+                // to the tower node of the matching edge
+                gpxMatches.add(gpxExtension.getEntry());
+            }
+        }
+
+        return gpxMatches;
+    }
+
+    public void saveMapMatching(List<EdgeMatch> edgeMatches, Integer trajectorieID) {
+        try {
+            PrintStream pt = new PrintStream(new FileOutputStream("map-matching-edges-matches", true));
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

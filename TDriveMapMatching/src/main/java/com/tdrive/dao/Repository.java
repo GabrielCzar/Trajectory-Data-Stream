@@ -7,17 +7,14 @@ import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Repository {
 
-    public Map<Integer, List<GPXEntry>> getAllEntriesAsGPX(String tableName) throws ClassNotFoundException, SQLException, IOException {
+    public Map<Integer, List<GPXEntry>> getAllEntriesAsGPX(String tableName, int limit) throws ClassNotFoundException, SQLException, IOException {
         Connection connection = ConnectionFactory.getConnection();
-        String query = "select taxi_id, date_time, new_lon as longitude, new_lat as latitude from " + tableName + " order by date_time";
+        String query = "select taxi_id, date_time, new_lon as longitude, new_lat as latitude from " + tableName + " order by date_time limit " + limit;
         PreparedStatement statement = connection.prepareStatement(query);
 
         Map<Integer, List<GPXEntry>> trajectories = new HashMap<>();
