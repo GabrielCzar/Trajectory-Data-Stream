@@ -58,13 +58,14 @@ public class TrajectoryMapMatching {
         }
         List<GPXEntry> gpxMatched = new ArrayList<>();
 
+        System.out.println("Speed - EdgeMatches -> " + weighting.getFlagEncoder().getSpeed(mr.getEdgeMatches().get(0).getEdgeState().getFlags()));
         // Get points of matched track
         Path path = mapMatching.calcPath(mr);
         PointList points = path.calcPoints();
 
         if (points != null && !points.isEmpty()) {
             for (GHPoint pt : points) {
-                System.out.println(pt);
+                //System.out.println(pt);
                 gpxMatched.add(new GPXEntry(pt.getLat(), pt.getLon(), 0.0, 0));
             }
         }
