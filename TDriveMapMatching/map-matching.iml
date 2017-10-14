@@ -26,5 +26,20 @@
     <orderEntry type="library" name="Maven: org.openstreetmap.osmosis:osmosis-osm-binary:0.45" level="project" />
     <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:2.6.1" level="project" />
     <orderEntry type="library" name="Maven: org.postgresql:postgresql:42.1.4" level="project" />
+    <orderEntry type="library" name="Maven: org.geotools:gt-shapefile:18.0" level="project" />
+    <orderEntry type="library" name="Maven: org.geotools:gt-data:18.0" level="project" />
+    <orderEntry type="library" name="Maven: org.geotools:gt-main:18.0" level="project" />
+    <orderEntry type="library" name="Maven: org.geotools:gt-api:18.0" level="project" />
+    <orderEntry type="library" name="Maven: org.geotools:gt-referencing:18.0" level="project" />
+    <orderEntry type="library" name="Maven: com.googlecode.efficient-java-matrix-library:core:0.26" level="project" />
+    <orderEntry type="library" name="Maven: commons-pool:commons-pool:1.5.4" level="project" />
+    <orderEntry type="library" name="Maven: org.geotools:gt-metadata:18.0" level="project" />
+    <orderEntry type="library" name="Maven: org.geotools:gt-opengis:18.0" level="project" />
+    <orderEntry type="library" name="Maven: net.java.dev.jsr-275:jsr-275:1.0-beta-2" level="project" />
+    <orderEntry type="library" name="Maven: javax.media:jai_core:1.1.3" level="project" />
+    <orderEntry type="library" name="Maven: jgridshift:jgridshift:1.0" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.geographiclib:GeographicLib-Java:1.44" level="project" />
+    <orderEntry type="library" name="Maven: com.vividsolutions:jts-core:1.14.0" level="project" />
+    <orderEntry type="library" name="Maven: org.jdom:jdom:1.1.3" level="project" />
   </component>
 </module>

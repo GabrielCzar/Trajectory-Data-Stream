@@ -9,7 +9,7 @@ package com.tdrive.util;
 
 public class CSVWriter {
 
-    public static void writer (String filename, List<FCDEntry> points, Integer trajectoryID) {
+    public static void writer (String filename, List<GPXEntry> points, Integer trajectoryID) {
         try {
             PrintStream pt = new PrintStream(new FileOutputStream(filename, true));
 

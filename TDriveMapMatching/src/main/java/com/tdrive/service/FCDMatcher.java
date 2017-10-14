@@ -2,7 +2,9 @@ package com.tdrive.service;
 
 import com.graphhopper.util.DistanceCalc;
 import com.graphhopper.util.DistancePlaneProjection;
+import com.graphhopper.util.GPXEntry;
 import com.tdrive.util.FCDEntry;
+import com.tdrive.util.GPXWriter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.stream.Collectors;
 
 public class FCDMatcher {
 
@@ -19,7 +22,7 @@ public class FCDMatcher {
         // init list for query nodes (outer loop)
         ConcurrentSkipListSet<Integer> queryNodes = new ConcurrentSkipListSet<>();
         // init and fill hash map for matching candidates per inner node (inner loop)
-        ConcurrentHashMap<Integer, ConcurrentSkipListMap<Double,Integer>> candidateNodes = new ConcurrentHashMap<>();
+        ConcurrentHashMap<Integer, ConcurrentSkipListMap<Double, Integer>> candidateNodes = new ConcurrentHashMap<>();
 
         DistanceCalc distanceCalc = new DistancePlaneProjection();
         List<FCDEntry> outerLoop = null;
@@ -36,7 +39,7 @@ public class FCDMatcher {
         }
 
         for (int i=0;i<innerLoop.size();i++)
-            candidateNodes.put(i, new ConcurrentSkipListMap<Double,Integer>());
+            candidateNodes.put(i, new ConcurrentSkipListMap<>());
 
         // loop over smaller point list
         for (int i=0;i<outerLoop.size();i++) {
@@ -77,7 +80,7 @@ public class FCDMatcher {
         }
 
         // create new map to control if matches are not in mixed order
-        ConcurrentSkipListMap<Integer,Integer> matches = new ConcurrentSkipListMap<Integer,Integer>();
+        ConcurrentSkipListMap<Integer, Integer> matches = new ConcurrentSkipListMap<>();
 
         // search for the best matches as long as queryNodes are not matched completely
         while (!queryNodes.isEmpty()) {
@@ -87,7 +90,7 @@ public class FCDMatcher {
                 boolean hasCandidates = false;
 
                 // search where the query node is the best candidate for one or multiple inner nodes
-                TreeMap<Double,Integer> winnerNodes = new TreeMap<Double,Integer>();
+                TreeMap<Double,Integer> winnerNodes = new TreeMap<>();
                 for (Map.Entry<Integer,ConcurrentSkipListMap<Double,Integer>> entry : candidateNodes.entrySet())
                     if (!entry.getValue().isEmpty()) {
                         // is the query node among the candidates of the inner node?
@@ -156,7 +159,7 @@ public class FCDMatcher {
         List<FCDEntry> fcdWithoutGaps = new ArrayList<>();
         List<FCDEntry> gap = new ArrayList<>();
 
-        for (int i=0;i<fcdWithGaps.size();i++) {
+        for (int i = 0; i < fcdWithGaps.size(); i++) {
             FCDEntry fcdEntry = fcdWithGaps.get(i);
             // extend the gap
             gap.add(fcdEntry);
@@ -193,41 +196,48 @@ public class FCDMatcher {
         accumDist.add(distance);
 
         // get the length of the the gap
-        for (int i=1;i<gap.size();i++) {
-            distance += distanceCalc.calcDist(gap.get(i-1).lat, gap.get(i-1).lon, gap.get(i).lat, gap.get(i).lon);
+        for (int i = 1; i < gap.size(); i++) {
+            distance += distanceCalc.calcDist(gap.get(i - 1).lat, gap.get(i - 1).lon, gap.get(i).lat, gap.get(i).lon);
             accumDist.add(distance);
         }
 
         // when length of the gap is above 200m AND either the start or the end have no measure
         // we exclude the gap points from the original list
-        if (distance > 200 && (gap.get(0).getTime() == 0 || gap.get(gap.size()-1).getTime() == 0))
+        if (distance > 200 && (gap.get(0).getTime() == 0 || gap.get(gap.size() - 1).getTime() == 0))
             return;
 
         // now, set speed and time per gap point and add it to fcdWithoutGaps list
         // case 1: Start has no measure. Use constant speed. Time = Distance/Speed.
         if (gap.get(0).getTime() == 0)
-            for (int i=0;i<gap.size()-1;i++) {
-                gap.get(i).setSpeed(gap.get(gap.size()-1).getSpeed());
-                gap.get(i).setTime(gap.get(gap.size()-1).getTime() - (long) ((distance - accumDist.get(i))/(gap.get(i).getSpeed()/3.6) * 1000));
+            for (int i = 0; i < gap.size() - 1; i++) {
+                gap.get(i).setSpeed(gap.get(gap.size() - 1).getSpeed());
+                gap.get(i).setTime(gap.get(gap.size() - 1).getTime() - (long) ((distance - accumDist.get(i)) / (gap.get(i).getSpeed() / 3.6) * 1000));
                 fcdWithoutGaps.add(gap.get(i));
             }
             // case 2: End has no measure. Use constant speed. Time = Distance/Speed.
-        else if (gap.get(gap.size()-1).getTime() == 0)
-            for (int i=1;i<gap.size();i++) {
+        else if (gap.get(gap.size() - 1).getTime() == 0)
+            for (int i = 1; i < gap.size(); i++) {
                 gap.get(i).setSpeed(gap.get(0).getSpeed());
-                gap.get(i).setTime(gap.get(0).getTime() + (long) (accumDist.get(i)/(gap.get(i).getSpeed()/3.6) * 1000));
+                gap.get(i).setTime(gap.get(0).getTime() + (long) (accumDist.get(i) / (gap.get(i).getSpeed() / 3.6) * 1000));
                 fcdWithoutGaps.add(gap.get(i));
             }
             // case 3: Boundary points have time and measure. Use constant acceleration. Time = 2*Distance/Speed
         else {
             double slope = (gap.get(0).getSpeed() - gap.get(gap.size()-1).getSpeed()) / (0 - distance);
-            for (int i=1;i<gap.size()-1;i++) {
+            for (int i = 1; i < gap.size() - 1; i++) {
                 gap.get(i).setSpeed((int) Math.round(slope * accumDist.get(i) + gap.get(0).getSpeed()));
-                gap.get(i).setTime(gap.get(i-1).getTime() + (long) (2 * accumDist.get(i)/(gap.get(i).getSpeed()/3.6) * 1000));
+                gap.get(i).setTime(gap.get(i - 1).getTime() + (long) (2 * accumDist.get(i) / (gap.get(i).getSpeed() / 3.6) * 1000));
                 fcdWithoutGaps.add(gap.get(i));
             }
         }
     }
 
+    public static List<FCDEntry> convertGPXEntryInFCDEntry (List<GPXEntry> gpxEntries) {
+        return gpxEntries.stream().map(gpxEntry -> new FCDEntry(gpxEntry)).collect(Collectors.toList());
+    }
+
+    public static List<GPXEntry> convertFCDEntryInGPXEntry(List<FCDEntry> fcdEntriesNoGaps) {
+        return fcdEntriesNoGaps.stream().map(fcdEntry -> fcdEntry.toGPXEntry()).collect(Collectors.toList());
+    }
 }
 

@@ -5,6 +5,10 @@ import com.graphhopper.util.GPXEntry;
 public class FCDEntry extends GPXEntry {
     private int speed;
 
+    public FCDEntry(GPXEntry e) {
+        this(e.lat, e.lon, e.ele, e.getTime(), 0);
+    }
+
     public FCDEntry(GPXEntry e, int speed) {
         this(e.lat, e.lon, e.ele, e.getTime(), speed);
     }
@@ -18,6 +22,7 @@ public class FCDEntry extends GPXEntry {
         super(lat, lon, ele, millis);
         this.speed = speed;
     }
+
 
     public GPXEntry toGPXEntry() {
         return new GPXEntry(this.lat, this.lon, this.ele, this.getTime());

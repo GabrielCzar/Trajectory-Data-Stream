@@ -44,6 +44,21 @@
             <version>42.1.4</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.geotools/gt-shapefile -->
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-shapefile</artifactId>
+            <version>18.0</version>
+        </dependency>
+
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>boundless</id>
+            <name>Boundless Maven Repository</name>
+            <url>http://repo.boundlessgeo.com/main</url>
+        </repository>
+    </repositories>
 
 </project>
