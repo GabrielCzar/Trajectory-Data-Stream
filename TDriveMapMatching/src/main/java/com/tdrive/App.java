@@ -11,6 +11,9 @@ import com.tdrive.util.FCDEntry;
 
 import com.tdrive.service.EstimatedSpeedAndTime.SpeedMatch;
 
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -28,12 +31,12 @@ public class App {
 
             // Match in GPX entries
             List<GPXEntry> gpxUnmatched = gpxEntries.get(1368);
+            
 
-            MatchResult mr = mapMatching.doMatching(gpxUnmatched);
+            //MatchResult mr = mapMatching.doMatching(gpxUnmatched);
+            ///Map<Integer, SpeedMatch> estimateSpeed = EstimatedSpeedAndTime.estimateSpeed(mr.getEdgeMatches());
 
-            Map<Integer, SpeedMatch> estimateSpeed = EstimatedSpeedAndTime.estimateSpeed(mr.getEdgeMatches());
-
-            CSVWriter.writeSpeedMatch("estimated-speed.csv", estimateSpeed, 1368);
+            //CSVWriter.writeSpeedMatch("estimated-speed.csv", estimateSpeed, 1368);
 
             /** CSV Files **/
                                                         // Personalize Matcher
@@ -55,10 +58,9 @@ public class App {
 
     }
 
-    private static void useFCDEntries (List<GPXEntry> gpxEntries, TrajectoryMapMatching mapMatching) {
+    private static void useFCDEntries (List<GPXEntry> gpxUnmatched, TrajectoryMapMatching mapMatching) {
 
         // Match in GPX entries
-        List<GPXEntry> gpxUnmatched = gpxEntries;
         List<GPXEntry> gpxMatched = mapMatching.doMatchingAndGetGPXEntries(gpxUnmatched);
         // Convert GPX entries in FCD entries
         List<FCDEntry> fcdUnmatched = FCDMatcher.convertGPXEntryInFCDEntry(gpxUnmatched);
@@ -68,7 +70,7 @@ public class App {
         // Remove gaps in FCD entries
         List<FCDEntry> fcdEntriesNoGaps = FCDMatcher.fillGaps(fcdMatch);
         // Export to CSV
-        CSVWriter.writerFCDEntries("fcd-match-with-fill-gaps.csv", fcdEntriesNoGaps, 1368);
+        CSVWriter.writerFCDEntries("fcd-match-with-fill-gaps-date-format.csv", fcdEntriesNoGaps, 1368);
     }
 
     private static void defaultGPXEntries (List<GPXEntry> gpxEntries, TrajectoryMapMatching mapMatching) {

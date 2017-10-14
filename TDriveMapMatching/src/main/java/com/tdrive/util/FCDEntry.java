@@ -2,6 +2,11 @@ package com.tdrive.util;
 
 import com.graphhopper.util.GPXEntry;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 public class FCDEntry extends GPXEntry {
     private int speed;
 
@@ -41,7 +46,7 @@ public class FCDEntry extends GPXEntry {
 
     @Override
     public int hashCode() {
-        return 59 * super.hashCode() + (int) (speed ^ (speed >>> 32));
+        return 59 * super.hashCode() + (speed ^ (speed >>> 32));
     }
 
     @Override
@@ -55,7 +60,8 @@ public class FCDEntry extends GPXEntry {
 
     @Override
     public String toString() {
-        return super.toString() + ", " + speed;
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+        return this.lat + ", " + this.lon + ", " + this.ele + ", " + df.format(new java.sql.Date(this.getTime())) + ", " + this.speed;
     }
 }
 
