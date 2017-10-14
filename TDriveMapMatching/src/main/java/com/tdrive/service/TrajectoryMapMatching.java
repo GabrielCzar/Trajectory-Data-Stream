@@ -72,22 +72,4 @@ public class TrajectoryMapMatching {
         return gpxMatched;
     }
 
-    public void saveMapMatching(List<GPXEntry> gpxEntries, Integer trajectoryID, String fileName) {
-        try {
-            PrintStream pt = new PrintStream(new FileOutputStream(fileName, true));
-
-            pt.println("taxi_id, latitude, longitude, ele, date_time");
-            for (GPXEntry gpx : gpxEntries) {
-                pt.println(formatGpxEntry(gpx, trajectoryID));
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private String formatGpxEntry (GPXEntry gpxEntry, int trajectoryID) {
-        return trajectoryID + ", " + gpxEntry.toString();
-    }
-
 }
