@@ -21,7 +21,7 @@ public class GPXWriter {
             "xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\"><trk>\n";
     private static final String footer = "</trkseg></trk></gpx>";
     
-    public static void writer(String filename, List<GPXEntry> points) {
+    public static void writer(String filename, List<FCDEntry> points) {
         String name = "<name>" + filename + "</name><trkseg>\n";
 
         String segments = "";
@@ -46,7 +46,7 @@ public class GPXWriter {
     }
 
     private static String getSegment (Double latitude, Double longitude, String datetime) {
-        return String.format("<trkpt lat=\"%lf\" lon=\"%lf\"><time>%s</time></trkpt>\n",
-                latitude, longitude, datetime);
+        return String.format("<trkpt lat=\"%lf\" lon=\"%lf\"><ele>%d</ele><time>%s</time></trkpt>\n",
+                latitude, longitude, 0, datetime);
     }
 }
