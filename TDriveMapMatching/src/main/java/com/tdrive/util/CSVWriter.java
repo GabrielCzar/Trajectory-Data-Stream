@@ -57,6 +57,6 @@ public class CSVWriter {
 
     private static String formatSpeedMatch (EstimatedSpeedAndTime.SpeedMatch speedMatch, Integer trajectoryID) {
         return trajectoryID + "," + speedMatch.edgeMatch.getEdgeState().getEdge() + ","
-                + (int) (speedMatch.timestamp / 1000) + "," + speedMatch.speed + "\n";
+                + (int) (speedMatch.timestamp / 1000) + "," + speedMatch.speed;
     }
 }
