@@ -16,10 +16,10 @@ public class EstimatedSpeedAndTime {
     private static GeometryFactory geoFactory = JTSFactoryFinder.getGeometryFactory();
 
     public static class SpeedMatch {
-        EdgeMatch edgeMatch;
-        double speed;
-        double timestamp;
-        double travelTime;
+        public EdgeMatch edgeMatch;
+        public double speed;
+        public double timestamp;
+        public double travelTime;
     }
 
     public static Map<Integer, SpeedMatch> estimateSpeed(List<EdgeMatch> matches) {

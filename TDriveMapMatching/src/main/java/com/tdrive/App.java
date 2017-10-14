@@ -1,13 +1,15 @@
 package com.tdrive;
 
-import com.graphhopper.matching.EdgeMatch;
 import com.graphhopper.matching.MatchResult;
 import com.graphhopper.util.GPXEntry;
 import com.tdrive.dao.Repository;
+import com.tdrive.service.EstimatedSpeedAndTime;
 import com.tdrive.service.FCDMatcher;
 import com.tdrive.service.TrajectoryMapMatching;
 import com.tdrive.util.CSVWriter;
 import com.tdrive.util.FCDEntry;
+
+import com.tdrive.service.EstimatedSpeedAndTime.SpeedMatch;
 
 import java.util.List;
 import java.util.Map;
@@ -24,13 +26,26 @@ public class App {
 
             TrajectoryMapMatching mapMatching = new TrajectoryMapMatching(OSM_FILE_PATH, GHLOCATION);
 
-
             // Match in GPX entries
             List<GPXEntry> gpxUnmatched = gpxEntries.get(1368);
 
+            MatchResult mr = mapMatching.doMatching(gpxUnmatched);
+
+            Map<Integer, SpeedMatch> estimateSpeed = EstimatedSpeedAndTime.estimateSpeed(mr.getEdgeMatches());
+
+            CSVWriter.writeSpeedMatch("estimated-speed.csv", estimateSpeed, 1368);
+
+            /** CSV Files **/
                                                         // Personalize Matcher
             // useFCDEntries(gpxEntries.get(1368), mapMatching); // FCDMatcher
             // defaultGPXEntries(gpxUnmatched, mapMatching); // GraphHopper Matcher
+
+            /** GPX Files **/
+
+            //List<GPXEntry> gpxMatched = mapMatching.doMatching(gpxUnmatched);
+            //GPXWriter.writer("gpx-matched.gpx", gpxMatched);
+
+            //GPXWriter.writer("gpx-unmatched.gpx", gpxUnmatched);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -44,7 +59,7 @@ public class App {
 
         // Match in GPX entries
         List<GPXEntry> gpxUnmatched = gpxEntries;
-        List<GPXEntry> gpxMatched = mapMatching.doMatching(gpxUnmatched);
+        List<GPXEntry> gpxMatched = mapMatching.doMatchingAndGetGPXEntries(gpxUnmatched);
         // Convert GPX entries in FCD entries
         List<FCDEntry> fcdUnmatched = FCDMatcher.convertGPXEntryInFCDEntry(gpxUnmatched);
         List<FCDEntry> fcdMatched = FCDMatcher.convertGPXEntryInFCDEntry(gpxMatched);
@@ -52,14 +67,12 @@ public class App {
         List<FCDEntry> fcdMatch = FCDMatcher.doFCDMatching(fcdUnmatched, fcdMatched);
         // Remove gaps in FCD entries
         List<FCDEntry> fcdEntriesNoGaps = FCDMatcher.fillGaps(fcdMatch);
-        // Convert FCD in GPX
-        List<GPXEntry> export = FCDMatcher.convertFCDEntryInGPXEntry(fcdEntriesNoGaps);
         // Export to CSV
-        CSVWriter.writer("fcd-match-with-fill-gaps.csv", export, 1368);
+        CSVWriter.writerFCDEntries("fcd-match-with-fill-gaps.csv", fcdEntriesNoGaps, 1368);
     }
 
     private static void defaultGPXEntries (List<GPXEntry> gpxEntries, TrajectoryMapMatching mapMatching) {
-        List<GPXEntry> gpxMatched = mapMatching.doMatching(gpxEntries);
-        CSVWriter.writer("map-matching-gpx-entries.csv", gpxMatched,1368);
+        List<GPXEntry> gpxMatched = mapMatching.doMatchingAndGetGPXEntries(gpxEntries);
+        CSVWriter.writerGPXEntries("map-matching-gpx-entries.csv", gpxMatched,1368);
     }
 }

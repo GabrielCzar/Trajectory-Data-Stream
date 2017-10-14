@@ -46,7 +46,7 @@ public class TrajectoryMapMatching {
         algoOptions = new AlgorithmOptions(algorithm, weighting);
     }
 
-    public List<GPXEntry> doMatching(List<GPXEntry> entries) {
+    public List<GPXEntry> doMatchingAndGetGPXEntries(List<GPXEntry> entries) {
         MapMatching mapMatching = new MapMatching(hopper, algoOptions);
         mapMatching.setMeasurementErrorSigma(50);
         MatchResult mr = null;
@@ -58,7 +58,7 @@ public class TrajectoryMapMatching {
         }
         List<GPXEntry> gpxMatched = new ArrayList<>();
 
-        System.out.println("Speed - EdgeMatches -> " + weighting.getFlagEncoder().getSpeed(mr.getEdgeMatches().get(0).getEdgeState().getFlags()));
+        //System.out.println("Speed - EdgeMatches -> " + weighting.getFlagEncoder().getSpeed(mr.getEdgeMatches().get(0).getEdgeState().getFlags()));
         // Get points of matched track
         Path path = mapMatching.calcPath(mr);
         PointList points = path.calcPoints();
@@ -72,4 +72,16 @@ public class TrajectoryMapMatching {
         return gpxMatched;
     }
 
+    public MatchResult doMatching(List<GPXEntry> entries) {
+        MapMatching mapMatching = new MapMatching(hopper, algoOptions);
+        mapMatching.setMeasurementErrorSigma(50);
+        MatchResult mr = null;
+        try {
+            mr = mapMatching.doWork(entries);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return mr;
+    }
 }

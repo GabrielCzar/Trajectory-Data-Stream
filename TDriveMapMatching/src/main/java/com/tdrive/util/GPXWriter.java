@@ -14,14 +14,16 @@ import java.util.List;
 
 public class GPXWriter {
     private static DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+
     private static final String header = "<?xml version=\"1.0\" encoding=\"UTF-8\" " +
             "standalone=\"no\" ?><gpx xmlns=\"http://www.topografix.com/GPX/1/1\" " +
             "creator=\"MapSource 6.15.5\" version=\"1.1\" " +
             "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " +
             "xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\"><trk>\n";
+
     private static final String footer = "</trkseg></trk></gpx>";
     
-    public static void writer(String filename, List<FCDEntry> points) {
+    public static void writer(String filename, List<GPXEntry> points) {
         String name = "<name>" + filename + "</name><trkseg>\n";
 
         String segments = "";
@@ -40,13 +42,13 @@ public class GPXWriter {
 
             System.out.println("Saved " + points.size() + " points.");
         } catch (IOException e) {
-            System.out.println("Error Writting GPX"  + e);
+            System.out.println("Error Writting GPX" + e);
         }
 
     }
 
     private static String getSegment (Double latitude, Double longitude, String datetime) {
-        return String.format("<trkpt lat=\"%lf\" lon=\"%lf\"><ele>%d</ele><time>%s</time></trkpt>\n",
+        return String.format("<trkpt lat=\"%4.8f\" lon=\"%4.8f\"><ele>%d</ele><time>%s</time></trkpt>\n",
                 latitude, longitude, 0, datetime);
     }
 }
