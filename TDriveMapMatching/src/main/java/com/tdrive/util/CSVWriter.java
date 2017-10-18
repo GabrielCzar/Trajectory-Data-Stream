@@ -17,7 +17,7 @@ public class CSVWriter {
     private static String HEADER = "taxi_id, latitude, longitude, ele, date_time";
 
     public static void writerGPXEntries (String filename, List<GPXEntry> points, Integer trajectoryID) {
-        writer(filename, points.stream().map(entry -> formatGpxEntry(entry, trajectoryID)).collect(Collectors.toList()));
+        writer(filename, points.stream().map(entry -> formatGpxEntryDefault(entry, trajectoryID)).collect(Collectors.toList()));
     }
 
     public static void writerFCDEntries (String filename, List<FCDEntry> points, Integer trajectoryID) {
@@ -44,6 +44,11 @@ public class CSVWriter {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
         return trajectoryID + ", " + entry.getLat() + ", " + entry.getLon() + ", " + entry.getEle() + ", " + df.format(new java.sql.Date(entry.getTime()));
     }
+
+    private static String formatGpxEntryDefault (GPXEntry entry, int trajectoryID) {
+        return trajectoryID + ", " + entry.toString();
+    }
+
 
     private static String formatFCDEntry (FCDEntry entry, int trajectoryID) {
         return trajectoryID + ", " + entry.toString();

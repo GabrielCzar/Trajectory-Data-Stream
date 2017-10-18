@@ -35,7 +35,7 @@ public class App {
             // Match in GPX entries
             List<GPXEntry> gpxUnmatched = gpxEntries.get(1368);
 
-            personalizeMatched(gpxUnmatched, mapMatching);
+            CSVWriter.writerGPXEntries("unmatched-points.csv", gpxUnmatched, 1368);
 
             //MatchResult mr = mapMatching.doMatching(gpxUnmatched);
             ///Map<Integer, SpeedMatch> estimateSpeed = EstimatedSpeedAndTime.estimateSpeed(mr.getEdgeMatches());
