@@ -122,4 +122,7 @@ public class TrajectoryMapMatching {
         return gpxMatched;
     }
 
+    public double getSpeed (long flags) {
+        return weighting.getFlagEncoder().getSpeed(flags);
+    }
 }
