@@ -6,6 +6,8 @@ import com.tdrive.service.EstimatedSpeedAndTime;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +41,8 @@ public class CSVWriter {
     }
 
     private static String formatGpxEntry (GPXEntry entry, int trajectoryID) {
-        return trajectoryID + ", " + entry.toString();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+        return trajectoryID + ", " + entry.getLat() + ", " + entry.getLon() + ", " + entry.getEle() + ", " + df.format(new java.sql.Date(entry.getTime()));
     }
 
     private static String formatFCDEntry (FCDEntry entry, int trajectoryID) {

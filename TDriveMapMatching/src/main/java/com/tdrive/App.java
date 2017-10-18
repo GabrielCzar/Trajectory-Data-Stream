@@ -1,5 +1,6 @@
 package com.tdrive;
 
+import com.graphhopper.matching.GPXExtension;
 import com.graphhopper.matching.MatchResult;
 import com.graphhopper.util.GPXEntry;
 import com.tdrive.dao.Repository;
@@ -14,8 +15,10 @@ import com.tdrive.service.EstimatedSpeedAndTime.SpeedMatch;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class App {
     private static final String TABLE = "taxi_graph_hopper_teste",
@@ -31,7 +34,8 @@ public class App {
 
             // Match in GPX entries
             List<GPXEntry> gpxUnmatched = gpxEntries.get(1368);
-            
+
+            personalizeMatched(gpxUnmatched, mapMatching);
 
             //MatchResult mr = mapMatching.doMatching(gpxUnmatched);
             ///Map<Integer, SpeedMatch> estimateSpeed = EstimatedSpeedAndTime.estimateSpeed(mr.getEdgeMatches());
@@ -55,7 +59,17 @@ public class App {
         }
     }
     private static void personalizeMatched(List<GPXEntry> gpxUnmatched, TrajectoryMapMatching mapMatching) {
+        MatchResult mr = mapMatching.doMatching(gpxUnmatched);
+        Map<Integer, SpeedMatch> estimateSpeed = EstimatedSpeedAndTime.estimateSpeed(mr.getEdgeMatches());
+        List<GPXEntry> entrieEstimatedSpeed = new ArrayList<>();
+        for (Map.Entry<Integer, SpeedMatch> entry : estimateSpeed.entrySet()) {
+            SpeedMatch speedMatch = entry.getValue();
+            List<GPXExtension> extensions = speedMatch.edgeMatch.getGpxExtensions();
+            List<GPXEntry> entries = extensions.stream().map(gpxExtension -> gpxExtension.getEntry()).collect(Collectors.toList());
+            entrieEstimatedSpeed.addAll(entries);
+        }
 
+        CSVWriter.writerGPXEntries("map-matching-estimated-speed-gpx-entries.csv", entrieEstimatedSpeed,1368);
     }
 
     private static void useFCDEntries (List<GPXEntry> gpxUnmatched, TrajectoryMapMatching mapMatching) {

@@ -14,6 +14,7 @@ import com.graphhopper.util.Parameters;
 import com.graphhopper.util.PointList;
 import com.graphhopper.util.shapes.GHPoint;
 import com.graphhopper.util.shapes.GHPoint3D;
+import com.tdrive.util.FCDEntry;
 import sun.security.krb5.internal.PAData;
 
 import java.io.FileOutputStream;
@@ -84,4 +85,41 @@ public class TrajectoryMapMatching {
         }
         return mr;
     }
+
+
+    public List<FCDEntry> doMatchingAndGetFCDEntries(List<GPXEntry> entries) {
+        MapMatching mapMatching = new MapMatching(hopper, algoOptions);
+        mapMatching.setMeasurementErrorSigma(50);
+        MatchResult mr = null;
+        try {
+            mr = mapMatching.doWork(entries);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        List<FCDEntry> gpxMatched = new ArrayList<>();
+
+//        for (int i = 0; i < mr.getEdgeMatches().size(); i++) {
+  //          System.out.println("Speed - EdgeMatches -> " + i  + " - " +
+    //                weighting.getFlagEncoder().getSpeed(mr.getEdgeMatches().get(i).getEdgeState().getFlags()));
+      //  }
+
+        System.out.println("SIZE EDGE MATCHES --> " + mr.getEdgeMatches().size());
+
+
+        mr.getEdgeMatches().get(0).getGpxExtensions().get(0).getEntry();
+
+        // Get points of matched track
+        Path path = mapMatching.calcPath(mr);
+        PointList points = path.calcPoints();
+
+        if (points != null && !points.isEmpty()) {
+            for (GHPoint pt : points) {
+                //System.out.println(pt);
+                gpxMatched.add(new FCDEntry(pt.getLat(), pt.getLon(), 0, 0));
+            }
+        }
+        return gpxMatched;
+    }
+
 }
