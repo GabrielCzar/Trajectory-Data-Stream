@@ -4,11 +4,14 @@ import com.graphhopper.util.GPXEntry;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.TimeZone;
 
 public class FCDEntry extends GPXEntry {
-    private int speed;
+    private double speed;
 
     public FCDEntry(GPXEntry e) {
         this(e.lat, e.lon, e.ele, e.getTime(), 0);
@@ -18,12 +21,12 @@ public class FCDEntry extends GPXEntry {
         this(e.lat, e.lon, e.ele, e.getTime(), speed);
     }
 
-    public FCDEntry(double lat, double lon, long millis, int speed) {
+    public FCDEntry(double lat, double lon, long millis, double speed) {
         super(lat, lon, millis);
         this.speed = speed;
     }
 
-    public FCDEntry(double lat, double lon, double ele, long millis, int speed) {
+    public FCDEntry(double lat, double lon, double ele, long millis, double speed) {
         super(lat, lon, ele, millis);
         this.speed = speed;
     }
@@ -36,17 +39,17 @@ public class FCDEntry extends GPXEntry {
     /**
      * The speed in kilometers per hour.
      */
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 
-    public void setSpeed(int speed) {
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 
     @Override
     public int hashCode() {
-        return 59 * super.hashCode() + (speed ^ (speed >>> 32));
+        return 59 * super.hashCode() + ((int)speed ^ ((int)speed >>> 32));
     }
 
     @Override
@@ -60,8 +63,8 @@ public class FCDEntry extends GPXEntry {
 
     @Override
     public String toString() {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-        return this.lat + ", " + this.lon + ", " + this.ele + ", " + df.format(new java.sql.Date(this.getTime())) + ", " + this.speed;
+        LocalDateTime ldt = LocalDateTime.ofInstant(Instant.ofEpochMilli(this.getTime()), ZoneId.of("GMT+8"));
+        return this.lat + ", " + this.lon + ", " + this.ele + ", " + ldt + ", " + this.getSpeed();
     }
 }
 

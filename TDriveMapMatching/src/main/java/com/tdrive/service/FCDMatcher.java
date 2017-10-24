@@ -4,13 +4,10 @@ import com.graphhopper.util.DistanceCalc;
 import com.graphhopper.util.DistancePlaneProjection;
 import com.graphhopper.util.GPXEntry;
 import com.tdrive.util.FCDEntry;
-import com.tdrive.util.GPXWriter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -165,7 +162,7 @@ public class FCDMatcher {
             gap.add(fcdEntry);
 
             // if entry has no time set continue with loop
-            if (fcdEntry.getTime() == 0)
+            if (fcdEntry.getTime() <= 0)
                 continue;
             else {
                 // fill the gap if it contains more than one value (must contain zeros then)
@@ -203,41 +200,113 @@ public class FCDMatcher {
 
         // when length of the gap is above 200m AND either the start or the end have no measure
         // we exclude the gap points from the original list
-        if (distance > 200 && (gap.get(0).getTime() == 0 || gap.get(gap.size() - 1).getTime() == 0))
+        if (distance > 500 && (gap.get(0).getTime() <= 0 || gap.get(gap.size() - 1).getTime() <= 0))
             return;
 
         // now, set speed and time per gap point and add it to fcdWithoutGaps list
         // case 1: Start has no measure. Use constant speed. Time = Distance/Speed.
+        long time;
         if (gap.get(0).getTime() == 0)
             for (int i = 0; i < gap.size() - 1; i++) {
                 gap.get(i).setSpeed(gap.get(gap.size() - 1).getSpeed());
-                gap.get(i).setTime(gap.get(gap.size() - 1).getTime() - (long) ((distance - accumDist.get(i)) / (gap.get(i).getSpeed() / 3.6) * 1000));
+                time = gap.get(gap.size() - 1).getTime() - (long) ((distance - accumDist.get(i)) / (gap.get(i).getSpeed() / 3.6) * 1000);
+                gap.get(i).setTime(time);
                 fcdWithoutGaps.add(gap.get(i));
             }
             // case 2: End has no measure. Use constant speed. Time = Distance/Speed.
         else if (gap.get(gap.size() - 1).getTime() == 0)
             for (int i = 1; i < gap.size(); i++) {
                 gap.get(i).setSpeed(gap.get(0).getSpeed());
-                gap.get(i).setTime(gap.get(0).getTime() + (long) (accumDist.get(i) / (gap.get(i).getSpeed() / 3.6) * 1000));
+                time = gap.get(0).getTime() + (long) (accumDist.get(i) / (gap.get(i).getSpeed() / 3.6) * 1000);
+                gap.get(i).setTime(time);
                 fcdWithoutGaps.add(gap.get(i));
             }
             // case 3: Boundary points have time and measure. Use constant acceleration. Time = 2*Distance/Speed
         else {
             double slope = (gap.get(0).getSpeed() - gap.get(gap.size()-1).getSpeed()) / (0 - distance);
             for (int i = 1; i < gap.size() - 1; i++) {
-                gap.get(i).setSpeed((int) Math.round(slope * accumDist.get(i) + gap.get(0).getSpeed()));
-                gap.get(i).setTime(gap.get(i - 1).getTime() + (long) (2 * accumDist.get(i) / (gap.get(i).getSpeed() / 3.6) * 1000));
+                gap.get(i).setSpeed(Math.round(slope * accumDist.get(i) + gap.get(0).getSpeed()));
+                time = gap.get(i - 1).getTime() + (long) (2 * accumDist.get(i) / (gap.get(i).getSpeed() / 3.6) * 1000);
+                gap.get(i).setTime(time);
                 fcdWithoutGaps.add(gap.get(i));
             }
         }
+    }
+    // Por que ao inves de pegar somente a distancia entre dois pontos consecutivos e dividir pela velocidade
+    // é utilizado a distancia acumulada ate akele ponto e dividi pela velocidade do ponto ???????
+    public static void fillInvalidTimes (List<FCDEntry> values) {
+        System.out.println("INVALID --> " + values.get(0).getSpeed());
+        DistanceCalc distanceCalc = new DistancePlaneProjection();
+        double distance;
+        long time = 0;
+        double speed;
+        // Corrigir velocidade media dos pontos com tempo invalido
+        // Supondo que o primeiro tempo esta correto
+
+        for (int i = 1; i < values.size(); i++) {
+            if (values.get(i).getTime() <= 0) {
+                distance = distanceCalc.calcDist(values.get(i + 1).lat, values.get(i + 1).lon, values.get(i - 1).lat, values.get(i - 1).lon);
+
+                // exist the problem of the time if the before or after has invalid time
+                time = (values.get(i - 1).getTime() - values.get(i + 1).getTime()) / 1000;
+
+                speed = ((distance / time) * 3600) / 1000;
+                System.out.println("SPEED --> " + speed);
+                values.get(i).setSpeed(speed);
+            }
+        }
+
+        for (int i = 1; i < values.size(); i++) {
+            if (values.get(i).getTime() <= 0) {
+                if (values.get(i + 1).getTime() > 0) { // Before has time
+                    distance = distanceCalc.calcDist(values.get(i - 1).lat, values.get(i - 1).lon, values.get(i).lat, values.get(i).lon);
+                    time = values.get(i - 1).getTime() + (long) (distance / (values.get(i).getSpeed() / 3.6) * 1000);
+                }
+                else if (values.get(i - 1).getTime() > 0) { // After has time
+                    distance = distanceCalc.calcDist(values.get(i).lat, values.get(i).lon, values.get(i + 1).lat, values.get(i + 1).lon);
+                    time = values.get(i + 1).getTime() - (long) (distance / (values.get(i).getSpeed() / 3.6) * 1000);
+                }
+                values.get(i).setTime(time);
+            }
+        }
+        System.out.println("FINISH INVALID TIME CORRECTED!");
+    }
+
+
+    public static void fillInvalidTimes (List<FCDEntry> values, double speed) {
+        System.out.println("INVALID --> " + values.get(0).getSpeed());
+        DistanceCalc distanceCalc = new DistancePlaneProjection();
+        List<Double> accumDist = new ArrayList<>();
+        double distance = 0.0;
+        long time = 0;
+
+        accumDist.add(distance);
+
+        // get the length of the the gap
+        for (int i = 1; i < values.size(); i++) {
+            distance += distanceCalc.calcDist(values.get(i - 1).lat, values.get(i - 1).lon, values.get(i).lat, values.get(i).lon);
+            accumDist.add(distance);
+        }
+
+        for (int i = 1; i < values.size(); i++) {
+            if (values.get(i).getTime() <= 0) {
+                if (values.get(i - 1).getTime() > 0) { // Before has time
+                    //distance = distanceCalc.calcDist(values.get(i - 1).lat, values.get(i - 1).lon, values.get(i).lat, values.get(i).lon);
+                    time = values.get(i - 1).getTime() + (long) (accumDist.get(i)  / (speed / 3.6) * 1000);
+                }
+                else if (values.get(i  + 1).getTime() > 0) { // After has time
+                    //distance = distanceCalc.calcDist(values.get(i).lat, values.get(i).lon, values.get(i + 1).lat, values.get(i + 1).lon);
+                    time = values.get(i + 1).getTime() - (long) (accumDist.get(i)  / (speed / 3.6) * 1000);
+                }
+                values.get(i).setTime(time);
+            }
+        }
+        System.out.println("FINISH INVALID TIME CORRECTED!");
     }
 
     public static List<FCDEntry> convertGPXEntryInFCDEntry (List<GPXEntry> gpxEntries) {
         return gpxEntries.stream().map(gpxEntry -> new FCDEntry(gpxEntry)).collect(Collectors.toList());
     }
 
-    public static List<GPXEntry> convertFCDEntryInGPXEntry(List<FCDEntry> fcdEntriesNoGaps) {
-        return fcdEntriesNoGaps.stream().map(fcdEntry -> fcdEntry.toGPXEntry()).collect(Collectors.toList());
-    }
 }
 

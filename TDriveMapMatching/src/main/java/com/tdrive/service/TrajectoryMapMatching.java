@@ -99,15 +99,9 @@ public class TrajectoryMapMatching {
         }
         List<FCDEntry> gpxMatched = new ArrayList<>();
 
-//        for (int i = 0; i < mr.getEdgeMatches().size(); i++) {
-  //          System.out.println("Speed - EdgeMatches -> " + i  + " - " +
-    //                weighting.getFlagEncoder().getSpeed(mr.getEdgeMatches().get(i).getEdgeState().getFlags()));
-      //  }
+        double speed = weighting.getFlagEncoder().getSpeed(mr.getEdgeMatches().get(0).getEdgeState().getFlags());
 
-        System.out.println("SIZE EDGE MATCHES --> " + mr.getEdgeMatches().size());
-
-
-        mr.getEdgeMatches().get(0).getGpxExtensions().get(0).getEntry();
+        //long millis = mr.getMatchMillis();
 
         // Get points of matched track
         Path path = mapMatching.calcPath(mr);
@@ -116,7 +110,7 @@ public class TrajectoryMapMatching {
         if (points != null && !points.isEmpty()) {
             for (GHPoint pt : points) {
                 //System.out.println(pt);
-                gpxMatched.add(new FCDEntry(pt.getLat(), pt.getLon(), 0, 0));
+                gpxMatched.add(new FCDEntry(pt.getLat(), pt.getLon(), 0.0, 0, speed));
             }
         }
         return gpxMatched;
