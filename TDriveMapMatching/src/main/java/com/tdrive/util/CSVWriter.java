@@ -22,7 +22,7 @@ public class CSVWriter {
 
     public static void writerFCDEntries (String filename, List<FCDEntry> points, Integer trajectoryID) {
         HEADER += ", speed";
-        writer(filename, points.stream().map(entry -> formatFCDEntry(entry, trajectoryID)).collect(Collectors.toList()));
+        writer(filename, points.stream().map(entry -> formatGpxEntry(entry, trajectoryID)).collect(Collectors.toList()));
     }
 
     private static void writer (String filename, List<String> data) {

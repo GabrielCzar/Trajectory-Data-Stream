@@ -261,8 +261,7 @@ public class FCDMatcher {
                 if (values.get(i + 1).getTime() > 0) { // Before has time
                     distance = distanceCalc.calcDist(values.get(i - 1).lat, values.get(i - 1).lon, values.get(i).lat, values.get(i).lon);
                     time = values.get(i - 1).getTime() + (long) (distance / (values.get(i).getSpeed() / 3.6) * 1000);
-                }
-                else if (values.get(i - 1).getTime() > 0) { // After has time
+                } else if (values.get(i - 1).getTime() > 0) { // After has time
                     distance = distanceCalc.calcDist(values.get(i).lat, values.get(i).lon, values.get(i + 1).lat, values.get(i + 1).lon);
                     time = values.get(i + 1).getTime() - (long) (distance / (values.get(i).getSpeed() / 3.6) * 1000);
                 }
@@ -272,36 +271,14 @@ public class FCDMatcher {
         System.out.println("FINISH INVALID TIME CORRECTED!");
     }
 
-
-    public static void fillInvalidTimes (List<FCDEntry> values, double speed) {
-        System.out.println("INVALID --> " + values.get(0).getSpeed());
-        DistanceCalc distanceCalc = new DistancePlaneProjection();
-        List<Double> accumDist = new ArrayList<>();
-        double distance = 0.0;
-        long time = 0;
-
-        accumDist.add(distance);
-
-        // get the length of the the gap
-        for (int i = 1; i < values.size(); i++) {
-            distance += distanceCalc.calcDist(values.get(i - 1).lat, values.get(i - 1).lon, values.get(i).lat, values.get(i).lon);
-            accumDist.add(distance);
-        }
-
-        for (int i = 1; i < values.size(); i++) {
+    public static void fillInvalidTimesByAvg(List<FCDEntry> values) {
+        long time;
+        for (int i = 0; i < values.size(); i++) {
             if (values.get(i).getTime() <= 0) {
-                if (values.get(i - 1).getTime() > 0) { // Before has time
-                    //distance = distanceCalc.calcDist(values.get(i - 1).lat, values.get(i - 1).lon, values.get(i).lat, values.get(i).lon);
-                    time = values.get(i - 1).getTime() + (long) (accumDist.get(i)  / (speed / 3.6) * 1000);
-                }
-                else if (values.get(i  + 1).getTime() > 0) { // After has time
-                    //distance = distanceCalc.calcDist(values.get(i).lat, values.get(i).lon, values.get(i + 1).lat, values.get(i + 1).lon);
-                    time = values.get(i + 1).getTime() - (long) (accumDist.get(i)  / (speed / 3.6) * 1000);
-                }
+                time = values.get(i + 1).getTime() + 1;
                 values.get(i).setTime(time);
             }
         }
-        System.out.println("FINISH INVALID TIME CORRECTED!");
     }
 
     public static List<FCDEntry> convertGPXEntryInFCDEntry (List<GPXEntry> gpxEntries) {

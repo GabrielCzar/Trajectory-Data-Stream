@@ -91,23 +91,18 @@ public class App {
         System.out.println(fcdMatch.size() + " - "  + qtd + " Matched with data set");
 
 
-        double speed = fcdMatch.get(0).getSpeed();
+        // double speed = fcdMatch.get(0).getSpeed();
 
         // Remove gaps in FCD entries
         List<FCDEntry> fcdEntriesNoGaps = FCDMatcher.fillGaps(fcdMatch);
 
-        FCDMatcher.fillInvalidTimes(fcdEntriesNoGaps);
+        FCDMatcher.fillInvalidTimesByAvg(fcdEntriesNoGaps);
 
-        for (int i = 0; i < 10; i++) {
-            System.out.println(fcdEntriesNoGaps.get(i));
-        }
 
-        for (int i = fcdEntriesNoGaps.size() - 1; i >= fcdEntriesNoGaps.size() - 11; i--) {
-            System.out.println(fcdEntriesNoGaps.get(i));
-        }
         // Export to CSV
 
-        //CSVWriter.writerFCDEntries("fcd-match-with-fill-gaps-date-format-speed-estimated-2.csv", fcdEntriesNoGaps, 1368);
+        String filename = "fcd-entries-invalid-time-correct-by-avg.csv";
+        CSVWriter.writerFCDEntries(filename, fcdEntriesNoGaps, 1368);
     }
 
 //    private static void defaultGPXEntries (List<GPXEntry> gpxEntries, TrajectoryMapMatching mapMatching) {
