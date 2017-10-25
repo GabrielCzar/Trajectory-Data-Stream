@@ -272,11 +272,13 @@ public class FCDMatcher {
     }
 
     public static void fillInvalidTimesByAvg(List<FCDEntry> values) {
-        long time;
-        for (int i = 0; i < values.size(); i++) {
+        long time1, time2, avg;
+        for (int i = 0; i < values.size() - 1; i++) {
             if (values.get(i).getTime() <= 0) {
-                time = values.get(i + 1).getTime() + 1;
-                values.get(i).setTime(time);
+                time1 = values.get(i + 1).getTime();
+                time2 = values.get(i - 1).getTime();
+                avg = (time2 - time1) / 2;
+                values.get(i).setTime(time1 + avg);
             }
         }
     }
